@@ -1,0 +1,61 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore environment variable files
+.env
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Python generated files
+__pycache__/
+*.pyc
+
+# Ignore Visual Studio Code generated files
+.vscode/
+.idea/
+
+# Ignore previous outputs and results
+context_embedding
+all_model_type_embeddings
+all_layers_embedding
+1000_embedding_tensor
+scripts
+test.ipynb
+
+outputs_last/previous-no-instruct-embeddings
+outputs_last/previous-no-instruct-results
+outputs_last/results_without_left_digits
+
+# Ignore plot and wandb
+plot
+wandb
+outputs_last/results/read_resualts.py
+draw_*.ipynb
+
+# Ignore all files with .pt extension except for the {model}.nocontext_single.pt
+*.pt
+!*.nocontext_single.pt
+
+# Ignore all files with .jsonl extension except for the {model}.nocontext_single.jsonl
+*.jsonl
+!*.nocontext_single.jsonl
+
+# Ignore temporary files
+eval_debug.sh
+eval_test.sh
+
+# temporarily igore outputs_mean
+outputs_mean/
