@@ -2,6 +2,7 @@
 
 ## Overview
 
+For more details, visit our [Slides](https://drive.google.com/file/d/1UljjoxV9diODj5A9kVAeU38mMyxazZ3r/view?usp=sharing).
 
 Mental Number Line (MNL) is a project aimed at understanding and visualizing the concept of the mental number line, which is a cognitive representation of numbers in a spatial format. This project includes tools for evaluating and analyzing numerical cognition and spatial representation of numbers. We define several metrics to evaluate whether the LLMs exhibit a representation of numbers that mirrors human MNL.
 
