@@ -11,11 +11,12 @@ model_fullnames = {  'gpt2': 'openai-community/gpt2',
                      'mathstral-7B': 'mistralai/Mathstral-7B-v0.1',
                      'opt-1.3b':"facebook/opt-iml-1.3b",
                      'llama3-8b':'meta-llama/Meta-Llama-3-8B-Instruct',
+                     'gemma2-9b':"google/gemma-2-9b-it",
+                     'Phi3.5-4b':"microsoft/Phi-3.5-mini-instruct",
                      'mistral-7B':"mistralai/Mistral-7B-Instruct-v0.3",
                      'llama3.1-8b':'meta-llama/Llama-3.1-8B-Instruct',
-                     'Phi3.5-4b':"microsoft/Phi-3.5-mini-instruct",
                      'Qwen2.5-7B': "Qwen/Qwen2.5-7B-Instruct",
-                     'gemma2-9b':"google/gemma-2-9b-it",
+                     'llama2-7b':"meta-llama/Llama-2-7b-chat-hf"
                      }
 
 def multi_call_local_model(model_name, inputs):
