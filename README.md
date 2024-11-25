@@ -1,6 +1,7 @@
-# Project Name
+# A double descent phenomenon in the orderliness of numerical representation in LLMs
 
 ## Overview
+
 
 Mental Number Line (MNL) is a project aimed at understanding and visualizing the concept of the mental number line, which is a cognitive representation of numbers in a spatial format. This project includes tools for evaluating and analyzing numerical cognition and spatial representation of numbers. We define several metrics to evaluate whether the LLMs exhibit a representation of numbers that mirrors human MNL.
 
