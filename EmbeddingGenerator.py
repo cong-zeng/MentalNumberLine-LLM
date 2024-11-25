@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import json
 import re
-import math
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from torch.utils.data import DataLoader, TensorDataset
 from metrics import nearest_neighbor_analysis
@@ -20,19 +19,18 @@ model_fullnames = {  'gpt2': 'openai-community/gpt2',
                      'mathstral-7B': 'mistralai/Mathstral-7B-v0.1',
                      'opt-1.3b':"facebook/opt-iml-1.3b",
                      'llama3-8b':'meta-llama/Meta-Llama-3-8B-Instruct',
-                     'gemma2-9b':"google/gemma-2-9b-it",
-                     'Phi3.5-4b':"microsoft/Phi-3.5-mini-instruct",
                      'mistral-7B':"mistralai/Mistral-7B-Instruct-v0.3",
                      'llama3.1-8b':'meta-llama/Llama-3.1-8B-Instruct',
+                     'Phi3.5-4b':"microsoft/Phi-3.5-mini-instruct",
                      'Qwen2.5-7B': "Qwen/Qwen2.5-7B-Instruct",
-                     'llama2-7b':"meta-llama/Llama-2-7b-chat-hf"
+                     'gemma2-9b':"google/gemma-2-9b-it",
                      }
 
 class EmbeddingGenerator():
 
     data_dir = '/home/zc/mml/dataset'
 
-    def __init__(self, model, context, num_type_name, output_dir, token_method, results_dir, is_probing=False):
+    def __init__(self, model, context, num_type_name, output_dir, token_method):
         self.prompt_data_name = context+'_'+num_type_name
         self.num_type_name = num_type_name
         self.model = model
@@ -40,8 +38,7 @@ class EmbeddingGenerator():
         self.data_df = self.read_prompt_data(self.prompt_data_name)
         self.embedding_dir = os.path.join(output_dir, 'embeddings')
         self.embedding = None
-        self.results_dir = os.path.join(output_dir, results_dir)
-        self.is_probing = is_probing
+        self.results_dir = os.path.join(output_dir, 'results')
 
         if not os.path.exists(self.embedding_dir):
             os.makedirs(self.embedding_dir)
@@ -170,34 +167,32 @@ class EmbeddingGenerator():
         print(f"Number of layers: {layers}")
         results = []
         for i in range(layers):
+            exp_info = {
+                'model': self.model,
+                't_method': self.method,
+                'prompt': self.prompt_data_name,
+                'layer': i,
+            }
             print(f"Layer {i}")
+            if i < 2:
+                continue
             embs = embedding[i]
             orderness = nearest_neighbor_analysis(embs, labels)
             spacing = distance_linear_analysis(embs, labels)
             left_digit = metric_left_digit_effect(embs, labels)
+            probe_compare = probe_num_compare_accu(embs, labels)
+            probe_addtion = probe_num_addition_accu(embs, labels, exp_info=exp_info)
             result = {
                         'model': self.model,
                         'method': self.method,
                         'prompt_data_name': self.prompt_data_name,
                         'embedding_layer': i,    
                         'orderness': orderness, 
+                        'probe_compare': '%.4f' % probe_compare,
+                        'probe_addition': '%.4f' % probe_addtion,
                         'left_digit': left_digit,
                         'spacing': spacing, 
                     }
-            if self.is_probing:
-                probe_compare = probe_num_compare_accu(embs, labels)
-                exp_info = {
-                    'model': self.model,
-                    't_method': self.method,
-                    'prompt': self.prompt_data_name,
-                    'layer': i,
-                    'orderness': orderness,
-                    'spacing': spacing[1]/spacing[2],
-                    'left_digit': math.log10(left_digit),
-                } 
-                probe_addition = probe_num_addition_accu(embs, labels, exp_info=exp_info)
-                result['probe_compare'] = '%.4f' % probe_compare
-                result['probe_addition'] = '%.4f' % probe_addition
             print(result)
             results.append(result)
         with open(results_fpath, 'w') as f:

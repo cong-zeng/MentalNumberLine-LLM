@@ -11,7 +11,7 @@ from torch.utils.data import TensorDataset, DataLoader
 import wandb
 
 
-WANDB_API_KEY="532007cd7a07c1aa0d1194049c3231dadd1d418e"
+WANDB_API_KEY="key"
 # Name and notes optional
 wandb.login(key=WANDB_API_KEY)
 
